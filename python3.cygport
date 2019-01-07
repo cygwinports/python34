@@ -1,5 +1,5 @@
 NAME="python3"
-VERSION=3.4.5
+VERSION=3.4.9
 RELEASE=1
 CATEGORY="Python Interpreters"
 SUMMARY="Py3K language interpreter"
@@ -109,8 +109,8 @@ idle3_CONTENTS="
 	usr/bin/idle3*
 	${pyrootdir#/}/idlelib/
 	${pyrootdir#/}/turtledemo/
-	usr/share/applications/
-	usr/share/icons/
+	usr/share/applications/idle${slot}.desktop
+	usr/share/icons/hicolor/*/apps/idle${slot//.}.png
 "
 python3_test_SUMMARY="Py3K tests"
 python3_test_CONTENTS="
@@ -136,7 +136,7 @@ python3_tkinter_CONTENTS="
 	${pyrootdir#/}/__pycache__/turtle.*
 "
 
-REQUIRES_EXCLUDE_FROM="$pyrootdir/distutils/command/\*.exe:$pyrootdir/lib2to3/tests/data/\*.py:$pyrootdir/test"
+REQUIRES_EXCLUDE_FROM="*/distutils/command/*:*/lib2to3/tests/data/*:*/test/*"
 
 DIFF_EXCLUDES="plat-cygwin pyconfig.h.in"
 
@@ -176,9 +176,9 @@ src_install() {
 	for i in 16 32 48
 	do
 		insinto /usr/share/icons/hicolor/${i}x${i}/apps
-		newins ${S}/Lib/idlelib/Icons/idle_${i}.png idle3.png
+		newins ${S}/Lib/idlelib/Icons/idle_${i}.png idle${slot//.}.png
 	done
-	make_desktop_entry idle3 "IDLE ${slot}" idle3 "Development;IDE"
+	make_desktop_entry idle${slot} "IDLE ${slot}" idle${slot//.} "Development;IDE"
 
 	dodir /var/lib/rebase/dynpath.d
 	echo ${pyrootdir}/site-packages > ${D}/var/lib/rebase/dynpath.d/${NAME}
